@@ -11,11 +11,11 @@ namespace SlutprojektetMärtaÅgrenTE18B
     {
         static void Main(string[] args)
         {
-            Random generator;
+           
 
             //"Loading"
             Console.Title = "Initiating startup sequence...  Please Wait";
-
+            /*
             //for loop som kör loading "animationen" fyra gånger.
             for (int i = 0; i < 4; i++)
             {
@@ -45,7 +45,7 @@ namespace SlutprojektetMärtaÅgrenTE18B
             Console.WriteLine("To get you started, here are some quick and easy questions for you to answer!");
             Console.WriteLine();
 
-            //fix this
+            */
             Console.WriteLine("What is your name?");
             string name = Console.ReadLine().Trim();
 
@@ -58,8 +58,8 @@ namespace SlutprojektetMärtaÅgrenTE18B
             string answer = Console.ReadLine().Trim().ToLower();
 
             //Lista för jag vill kunna lägga till fler alternativ senare.
-            List<string> answerKey = new List<string>() { "yes", "no" };
-            answer = CheckAnswer(question, answerKey, answer);
+            List<string> answerYesOrNo = new List<string>() { "yes", "no" };
+            answer = CheckAnswer(question, answerYesOrNo, answer);
 
             //Om man ändrar sig får man ändra namnet så mycket man vill
             while (answer == "no")
@@ -72,15 +72,13 @@ namespace SlutprojektetMärtaÅgrenTE18B
                 Console.WriteLine(question);
                 answer = Console.ReadLine().Trim().ToLower();
                 
-                answerKey = new List<string>() { "yes", "no" };
-                answer = CheckAnswer(question, answerKey, answer);
+                answer = CheckAnswer(question, answerYesOrNo, answer);
             }
 
             Console.WriteLine("Great! We're now ready to start!");
             Thread.Sleep(2000);
             Console.Clear();
 
-            //fix both chunk above and below
 
             //Pal startar
             for (int i = 0; i < 2; i++)
@@ -95,6 +93,8 @@ namespace SlutprojektetMärtaÅgrenTE18B
                 Console.Clear();
             }
 
+            Console.Title = "Pal Place";
+
             Console.WriteLine("...hello?");
             Console.WriteLine(name + "?");
             Console.ReadLine();
@@ -104,7 +104,43 @@ namespace SlutprojektetMärtaÅgrenTE18B
             Console.WriteLine("...");
             Console.WriteLine("...");
             Console.WriteLine("Well, it is a pleasure to meet you " + name + ".");
-            Console.WriteLine("");
+            Console.WriteLine("It's going to be so fun to play games with you!");
+            Console.WriteLine("I have three games here for you, but first;");
+            Console.WriteLine("What is your birthmonth?");
+            
+            string birthMonthAnswer = Console.ReadLine().ToLower().Trim();
+            //Lista för answerKey är en lista och jag vill inte ha krångel med att konvertera från array.
+            List<string> months = new List<string>() { "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" };
+            birthMonthAnswer = CheckAnswer("What is your birthmonth?", months, birthMonthAnswer);
+            //Kommer användas senare i gissa siffran, +1 för att få rätt månad eftersom listan börjar på 0.
+            int birthMonth = months.IndexOf(birthMonthAnswer) + 1;
+
+            Console.WriteLine("And what day of the month where you born on?");
+            string birthDayAnswer = Console.ReadLine().ToLower().Trim();
+
+            bool convert = int.TryParse(birthDayAnswer, out int birthDay);
+
+            while (convert == false || birthDay > 31 || birthDay < 1)
+            {
+                Console.WriteLine("That's not a valid answer :(");
+                Console.WriteLine("Try again, on what day where you born?");
+                birthDayAnswer = Console.ReadLine().ToLower().Trim();
+                convert = int.TryParse(birthDayAnswer, out birthDay);
+            }
+            
+            question = "So you were born on " + birthDay + " " + birthMonthAnswer + "?";
+            Console.WriteLine(question);
+            answer = Console.ReadLine().ToLower().Trim();
+            answer = CheckAnswer(question, answerYesOrNo, answer);
+            
+            if (answer == "no")
+            {
+                
+            }
+            
+            //Fixa while loop som körs så länge answer == no och fixa så yes tar en vidare
+            
+
 
 
             //Hub
