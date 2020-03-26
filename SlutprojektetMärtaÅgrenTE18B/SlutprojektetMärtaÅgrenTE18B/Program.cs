@@ -11,7 +11,7 @@ namespace SlutprojektetMärtaÅgrenTE18B
     {
         static void Main(string[] args)
         {
-           
+            GuessTheNumber();
 
             //"Loading"
             Console.Title = "Initiating startup sequence...  Please Wait";
@@ -106,45 +106,46 @@ namespace SlutprojektetMärtaÅgrenTE18B
             Console.WriteLine("Well, it is a pleasure to meet you " + name + ".");
             Console.WriteLine("It's going to be so fun to play games with you!");
             Console.WriteLine("I have three games here for you, but first;");
-            Console.WriteLine("What is your birthmonth?");
-            
-            string birthMonthAnswer = Console.ReadLine().ToLower().Trim();
-            //Lista för answerKey är en lista och jag vill inte ha krångel med att konvertera från array.
-            List<string> months = new List<string>() { "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" };
-            birthMonthAnswer = CheckAnswer("What is your birthmonth?", months, birthMonthAnswer);
-            //Kommer användas senare i gissa siffran, +1 för att få rätt månad eftersom listan börjar på 0.
-            int birthMonth = months.IndexOf(birthMonthAnswer) + 1;
 
-            Console.WriteLine("And what day of the month where you born on?");
-            string birthDayAnswer = Console.ReadLine().ToLower().Trim();
-
-            bool convert = int.TryParse(birthDayAnswer, out int birthDay);
-
-            while (convert == false || birthDay > 31 || birthDay < 1)
+            answer = "no";
+            while (answer == "no")
             {
-                Console.WriteLine("That's not a valid answer :(");
-                Console.WriteLine("Try again, on what day where you born?");
-                birthDayAnswer = Console.ReadLine().ToLower().Trim();
-                convert = int.TryParse(birthDayAnswer, out birthDay);
+                Console.WriteLine("What is your birthmonth?");
+
+                string birthMonthAnswer = Console.ReadLine().ToLower().Trim();
+                //Lista för answerKey är en lista och jag vill inte ha krångel med att konvertera från array.
+                List<string> months = new List<string>() { "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" };
+                birthMonthAnswer = CheckAnswer("What is your birthmonth?", months, birthMonthAnswer);
+                //Kommer användas senare i gissa siffran, +1 för att få rätt månad eftersom listan börjar på 0.
+                int birthMonth = months.IndexOf(birthMonthAnswer) + 1;
+
+                Console.WriteLine("And what day of the month where you born on?");
+                string birthDayAnswer = Console.ReadLine().ToLower().Trim();
+                int birthDay = CheckNumber("what day of the month where you born on?", 31, 1, birthDayAnswer);
+
+                //I den här världen är man inte född på "first", "second" eller "third" utan man är då född på "firth", "seconth", och "thirth".
+                question = "So you were born on " + birthMonthAnswer + " " + birthDay + "th " + "? Did I get that right?";
+                Console.WriteLine(question);
+                answer = Console.ReadLine().ToLower().Trim();
+                answer = CheckAnswer(question, answerYesOrNo, answer);
+
+                if (answer == "no")
+                {
+                    Console.WriteLine("Oh, okay. Then I am once again asking you:");
+                }
+
             }
-            
-            question = "So you were born on " + birthDay + " " + birthMonthAnswer + "?";
-            Console.WriteLine(question);
-            answer = Console.ReadLine().ToLower().Trim();
-            answer = CheckAnswer(question, answerYesOrNo, answer);
-            
-            if (answer == "no")
-            {
-                
-            }
-            
+
             //Fixa while loop som körs så länge answer == no och fixa så yes tar en vidare
-            
 
-
+            Console.WriteLine("Fantastic! Let's get to the games then. :>");
+            Thread.Sleep(3000);
 
             //Hub
+            Console.Clear();
+            Console.Title = "Game Hub";
 
+            Console.WriteLine("Here are the ");
 
 
 
@@ -168,7 +169,7 @@ namespace SlutprojektetMärtaÅgrenTE18B
             Console.ReadLine();
         }
 
-
+        //Metod som kollar om svaret är tillåtet, fungerar inte om svaret är en siffra.
         static string CheckAnswer (string question, List<string> answerKey, string answer)
         {
 
@@ -184,11 +185,87 @@ namespace SlutprojektetMärtaÅgrenTE18B
 
         }
 
-        static void RPS()
+        //Metod som kolla om svaret är giltigt om man ska svara med en siffra.
+        static int CheckNumber (string question, int upperBound, int lowerBound, string input)
+        {
+            bool convert = int.TryParse(input, out int answer);
+            while (convert == false || answer > upperBound || answer < lowerBound)
+            {
+                Console.WriteLine("I'm afraid I can't work with that answer. :<");
+                Console.WriteLine("Try again, " + question);
+                input = Console.ReadLine().ToLower().Trim();
+                convert = int.TryParse(input, out answer);
+            }
+
+            return answer;
+        }
+
+
+        static void GuessTheNumber()
         {
             Console.Clear();
-            Console.WriteLine("Welcome to Rock, Paper, Scissors!");
+            Console.WriteLine("Welcome to Guess The Number!");
+            Console.WriteLine("Here I will think of a number and you guess what it is. :>");
 
+            Random generator = new Random();
+            int correctNumber = generator.Next(1, 11);
+            int guessCount = 0;
+
+            Console.WriteLine("Okay, I'm thinking of a number between 1 and 10. Try and guess what it is!");
+            string input = Console.ReadLine().Trim();
+            int guess = CheckNumber("please.", 10, 1, input);
+            
+
+            while (guess != correctNumber)
+            {
+                guessCount++;
+
+                if (guess > correctNumber)
+                {
+                    Console.Write("That's not quite it");
+                    //Man får en gissning innan den börjar hjälpa med too high och too low.
+                    if (guessCount > 1)
+                    {
+                        Console.Write(", it's too high");
+                    }
+                    Console.WriteLine(".");
+                }
+
+
+                else if (guess < correctNumber)
+                {
+                    Console.Write("That's not quite it");
+                    if (guessCount > 1)
+                    {
+                        Console.Write(", it's too low");
+                    }
+                    Console.WriteLine(".");
+                }
+
+                input = Console.ReadLine().Trim();
+                guess = CheckNumber("please.", 10, 1, input);
+            }
+
+            
+            Console.WriteLine("That's right! I was thinking of " + correctNumber + ".");
+            Console.WriteLine("Let's go again, this time I'll make it more difficult.");
+            //for loop som skriver ut 3 punkter
+            for (int i = 0; i < 3; i++)
+            {
+                Thread.Sleep(1000);
+                Console.Write(".");
+
+            }
+            Thread.Sleep(1500);
+            Console.WriteLine();
+            for (int i = 0; i < 3; i++)
+            {
+                Thread.Sleep(1000);
+                Console.Write(".");
+
+            }
+            Thread.Sleep(1500);
+            
 
         }
 
