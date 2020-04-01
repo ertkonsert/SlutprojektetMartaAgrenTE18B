@@ -11,7 +11,7 @@ namespace SlutprojektetMärtaÅgrenTE18B
     {
         static void Main(string[] args)
         {
-            GuessTheNumber();
+            GuessTheNumber(7, 26);
 
             //"Loading"
             Console.Title = "Initiating startup sequence...  Please Wait";
@@ -34,18 +34,18 @@ namespace SlutprojektetMärtaÅgrenTE18B
             Console.WriteLine("Ready to start, press Enter to launch :)");
             Console.ReadLine();
             Console.Clear();
-
+            */
             Console.Title = "Welcome to Pal Place!";
 
             //Start och intro
             Console.WriteLine("Hello new User!");
             Console.WriteLine("And welcome to Pal Place!");
-            Console.WriteLine("Pal Place is the one and only place where you get to hang out with your very own AI Pal! All for free!");
+            Console.WriteLine("Pal Place is the one and only place where you get to hang out and play games with your very own AI Pal! All for free!");
             Console.WriteLine("Your own personal Pal will learn from your interactions and adapt! For the low, low price of $0!");
             Console.WriteLine("To get you started, here are some quick and easy questions for you to answer!");
             Console.WriteLine();
 
-            */
+            
             Console.WriteLine("What is your name?");
             string name = Console.ReadLine().Trim();
 
@@ -105,7 +105,12 @@ namespace SlutprojektetMärtaÅgrenTE18B
             Console.WriteLine("...");
             Console.WriteLine("Well, it is a pleasure to meet you " + name + ".");
             Console.WriteLine("It's going to be so fun to play games with you!");
-            Console.WriteLine("I have three games here for you, but first;");
+            Console.WriteLine("I have three games here for you, but first I have some questions to get to know you better. ^^");
+
+
+            //Här frågar den om ens födelsedag.
+            int birthMonth = 0;
+            int birthDay = 0;
 
             answer = "no";
             while (answer == "no")
@@ -117,14 +122,15 @@ namespace SlutprojektetMärtaÅgrenTE18B
                 List<string> months = new List<string>() { "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" };
                 birthMonthAnswer = CheckAnswer("What is your birthmonth?", months, birthMonthAnswer);
                 //Kommer användas senare i gissa siffran, +1 för att få rätt månad eftersom listan börjar på 0.
-                int birthMonth = months.IndexOf(birthMonthAnswer) + 1;
+                birthMonth = months.IndexOf(birthMonthAnswer) + 1;
+                
 
                 Console.WriteLine("And what day of the month where you born on?");
                 string birthDayAnswer = Console.ReadLine().ToLower().Trim();
-                int birthDay = CheckNumber("what day of the month where you born on?", 31, 1, birthDayAnswer);
+                birthDay = CheckNumber("what day of the month where you born on?", 31, 1, birthDayAnswer);
 
                 //I den här världen är man inte född på "first", "second" eller "third" utan man är då född på "firth", "seconth", och "thirth".
-                question = "So you were born on " + birthMonthAnswer + " " + birthDay + "th " + "? Did I get that right?";
+                question = "So you were born on " + birthMonthAnswer + " " + birthDay + "th" + "? Did I get that right?";
                 Console.WriteLine(question);
                 answer = Console.ReadLine().ToLower().Trim();
                 answer = CheckAnswer(question, answerYesOrNo, answer);
@@ -136,7 +142,13 @@ namespace SlutprojektetMärtaÅgrenTE18B
 
             }
 
-            //Fixa while loop som körs så länge answer == no och fixa så yes tar en vidare
+
+            //Här frågar den om ens favoritfärg
+
+
+
+            //Här frågar den om ens favoritdjur
+            
 
             Console.WriteLine("Fantastic! Let's get to the games then. :>");
             Thread.Sleep(3000);
@@ -145,7 +157,7 @@ namespace SlutprojektetMärtaÅgrenTE18B
             Console.Clear();
             Console.Title = "Game Hub";
 
-            Console.WriteLine("Here are the ");
+            Console.WriteLine("Here are the games!");
 
 
 
@@ -176,7 +188,7 @@ namespace SlutprojektetMärtaÅgrenTE18B
             
             while (answerKey.Contains(answer) == false)
             {
-                Console.WriteLine("I'm afraid I don't understand your answer.");
+                Console.WriteLine("I'm afraid I don't understand your answer. :I");
                 Console.WriteLine(question);
                 answer = Console.ReadLine().Trim().ToLower();
             }
@@ -191,7 +203,7 @@ namespace SlutprojektetMärtaÅgrenTE18B
             bool convert = int.TryParse(input, out int answer);
             while (convert == false || answer > upperBound || answer < lowerBound)
             {
-                Console.WriteLine("I'm afraid I can't work with that answer. :<");
+                Console.WriteLine("I'm afraid I can't work with that answer. :I");
                 Console.WriteLine("Try again, " + question);
                 input = Console.ReadLine().ToLower().Trim();
                 convert = int.TryParse(input, out answer);
@@ -201,7 +213,7 @@ namespace SlutprojektetMärtaÅgrenTE18B
         }
 
 
-        static void GuessTheNumber()
+        static void GuessTheNumber(int birthMonth, int birthDay)
         {
             Console.Clear();
             Console.WriteLine("Welcome to Guess The Number!");
@@ -248,7 +260,52 @@ namespace SlutprojektetMärtaÅgrenTE18B
 
             
             Console.WriteLine("That's right! I was thinking of " + correctNumber + ".");
-            Console.WriteLine("Let's go again, this time I'll make it more difficult.");
+
+
+            correctNumber = generator.Next(1, 21);
+            guessCount = 0;
+
+            Console.WriteLine("Let's play again. :>");
+            Console.WriteLine("This time I'm thinking of a number between 1 and 20. Try and guess it!");
+            input = Console.ReadLine().Trim();
+            guess = CheckNumber("please.", 20, 1, input);
+
+
+            while (guess != correctNumber)
+            {
+                guessCount++;
+
+                if (guess > correctNumber)
+                {
+                    Console.Write("That's not quite it");
+                    //Man får en gissning innan den börjar hjälpa med too high och too low.
+                    if (guessCount > 1)
+                    {
+                        Console.Write(", it's too high");
+                    }
+                    Console.WriteLine(".");
+                }
+
+
+                else if (guess < correctNumber)
+                {
+                    Console.Write("That's not quite it");
+                    if (guessCount > 1)
+                    {
+                        Console.Write(", it's too low");
+                    }
+                    Console.WriteLine(".");
+                }
+
+                input = Console.ReadLine().Trim();
+                guess = CheckNumber("please.", 20, 1, input);
+            }
+
+            Console.WriteLine("Wow, you're really good at this!");
+            Console.WriteLine("Let's go one last time, this time I'll make it more difficult. >:3c");
+
+            guessCount = 0;
+
             //for loop som skriver ut 3 punkter
             for (int i = 0; i < 3; i++)
             {
@@ -265,8 +322,38 @@ namespace SlutprojektetMärtaÅgrenTE18B
 
             }
             Thread.Sleep(1500);
-            
 
+            //istället för en slumpvald siffra är det ens födelsedag man ska gissa på.
+            //för att få det utskrivet rätt
+            string correct = birthMonth.ToString() + birthDay.ToString();
+            //det borde inte kunna bli problem att konvertera men jag kör TryParse ändå.
+            int.TryParse(correct, out correctNumber);
+
+            
+            Console.WriteLine("Okay I'm ready!");
+            Console.WriteLine();
+            Console.WriteLine("I'm thinking of a number between 1 and 10,000!");
+            input = Console.ReadLine().Trim();
+            guess = CheckNumber("please.", 10000, 1, input);
+
+
+            while (guess != correctNumber)
+            {
+                guessCount++;
+
+                Console.WriteLine("Nope, that's not it.");
+                Console.WriteLine("Guess again!");
+
+                if (guessCount > 3)
+                {
+                    Console.WriteLine("psst, here's a hint!");
+
+                }
+
+                input = Console.ReadLine().Trim();
+                guess = CheckNumber("please.", 10000, 1, input);
+            }
+            //fixa ^^^
         }
 
     }
