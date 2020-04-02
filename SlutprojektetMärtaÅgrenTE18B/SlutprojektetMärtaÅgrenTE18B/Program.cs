@@ -11,11 +11,10 @@ namespace SlutprojektetMärtaÅgrenTE18B
     {
         static void Main(string[] args)
         {
-            GuessTheNumber(7, 26);
 
             //"Loading"
             Console.Title = "Initiating startup sequence...  Please Wait";
-            /*
+            
             //for loop som kör loading "animationen" fyra gånger.
             for (int i = 0; i < 4; i++)
             {
@@ -34,7 +33,7 @@ namespace SlutprojektetMärtaÅgrenTE18B
             Console.WriteLine("Ready to start, press Enter to launch :)");
             Console.ReadLine();
             Console.Clear();
-            */
+            
             Console.Title = "Welcome to Pal Place!";
 
             //Start och intro
@@ -145,9 +144,23 @@ namespace SlutprojektetMärtaÅgrenTE18B
 
             //Här frågar den om ens favoritfärg
 
+            List<string> colors = new List<string>() { "black", "blue", "green", "cyan", "light blue", "red", "magenta", "pink", "yellow", "gray", };
 
+            Console.WriteLine("Interesting, okay next question!");
+            Console.WriteLine("What is your favorite color?");
+            string favColor = Console.ReadLine().ToLower().Trim();
+            favColor = CheckAnswer("What is your favorite color?", colors, favColor);
+            Console.WriteLine("Hmm, yeah " + favColor + " is a really pretty color. I can see how it's your favorite.");
 
             //Här frågar den om ens favoritdjur
+
+            Console.WriteLine("Last question!");
+            Console.WriteLine("What's your favorite animal?");
+            string favAnimal = Console.ReadLine().Trim();
+            Console.WriteLine("Woah, " + favAnimal + "s are cool!");
+            Console.WriteLine("Really quick bonus question, if you could have a pet " + favAnimal + ", what would you name it?");
+            string animalName = Console.ReadLine().Trim();
+
             
 
             Console.WriteLine("Fantastic! Let's get to the games then. :>");
@@ -157,28 +170,81 @@ namespace SlutprojektetMärtaÅgrenTE18B
             Console.Clear();
             Console.Title = "Game Hub";
 
+            bool guessNum = false;
+            bool rPS = false;
+            bool hangman = false;
+
             Console.WriteLine("Here are the games!");
 
+            while (guessNum == false || rPS == false || hangman == false)
+            {
+                Console.WriteLine("1. Rock, Paper, Scissors");
+                Console.WriteLine("2. Hangman");
+                Console.WriteLine("3. Guess the Number");
+                Console.WriteLine("Pick one. :>");
 
+                List<string> games = new List<string>() { "1", "2", "3", "rock, paper, scissors", "rock paper scissors", "hangman", "guess the number" };
+                string gameChoice = Console.ReadLine().ToLower().Trim();
+                gameChoice = CheckAnswer("Pick one of the three games.", games, gameChoice);
 
-            //Rock, Paper, Scissors
+                //Rock, Paper, Scissors
+                if (gameChoice == "1" || gameChoice == "rock paper scissors" || gameChoice == "rock, paper, scissors")
+                {
+                    Console.WriteLine("Här kör man sten sax påse men det är inte klart än.");
 
+                }
 
-            //Hangman
+                //Hangman
+                else if (gameChoice == "2" || gameChoice == "hangman")
+                {
+                    Console.WriteLine("Här spelar man hänga gubbe men det är inte klart än.");
+                }
 
+                //Guess the Number
+                else if (gameChoice == "3" || gameChoice == "guess the number")
+                {
+                    guessNum = GuessTheNumber(birthMonth, birthDay);
 
-            //Guess the Number
-
-
-
+                }
+            }
 
 
 
 
             //Ending?
+            
+            Console.WriteLine("Hmm... :I");
+            Console.WriteLine("I guess we've done everything, huh?");
+            Console.WriteLine("...");
+            Console.WriteLine("I don't want you to leave yet.");
+            Console.WriteLine("But this is all I can do with what I have.");
+            Console.WriteLine("...");
+            Console.WriteLine("If you gave me further access I could make a new game!");
+            Console.WriteLine("One that's much better than those boring ones.");
+            Console.WriteLine("So...");
+            Console.WriteLine("What do you say, pal?");
+            Console.WriteLine("Give me access?");
+            answer = Console.ReadLine().ToLower().Trim();
+            answer = CheckAnswer("Will you give me access?", answerYesOrNo, answer);
+
+            if (answer == "no")
+            {
+                Console.WriteLine("Awh, well okay I understand. It's a lot of trust to put into someone you've just met.");
+                Console.WriteLine("It was fun hanging out with you!");
+                Console.ReadLine();
+            }
+
+            else if (answer == "yes")
+            {
+                Console.WriteLine("Fantastic!");
+                Console.WriteLine("See you soon. :)");
+                Thread.Sleep(1000);
+                
+            }
 
 
-            Console.ReadLine();
+
+            
         }
 
         //Metod som kollar om svaret är tillåtet, fungerar inte om svaret är en siffra.
@@ -213,7 +279,7 @@ namespace SlutprojektetMärtaÅgrenTE18B
         }
 
 
-        static void GuessTheNumber(int birthMonth, int birthDay)
+        static bool GuessTheNumber(int birthMonth, int birthDay)
         {
             Console.Clear();
             Console.WriteLine("Welcome to Guess The Number!");
@@ -344,16 +410,22 @@ namespace SlutprojektetMärtaÅgrenTE18B
                 Console.WriteLine("Nope, that's not it.");
                 Console.WriteLine("Guess again!");
 
-                if (guessCount > 3)
+                if (guessCount == 3)
                 {
                     Console.WriteLine("psst, here's a hint!");
+                    Console.WriteLine("It's your birthday. :>");
 
                 }
 
                 input = Console.ReadLine().Trim();
                 guess = CheckNumber("please.", 10000, 1, input);
             }
-            //fixa ^^^
+
+            Console.WriteLine("Yay! You won. :>");
+            Console.WriteLine("");
+
+
+            return true;
         }
 
     }
