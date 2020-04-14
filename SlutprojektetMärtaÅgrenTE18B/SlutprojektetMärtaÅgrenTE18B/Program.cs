@@ -12,6 +12,9 @@ namespace SlutprojektetMärtaÅgrenTE18B
         static void Main(string[] args)
         {
 
+            RPS();
+
+
             //"Loading"
             Console.Title = "Initiating startup sequence...  Please Wait";
             
@@ -152,7 +155,7 @@ namespace SlutprojektetMärtaÅgrenTE18B
             favColor = CheckAnswer("What is your favorite color?", colors, favColor);
             Console.WriteLine("Hmm, yeah " + favColor + " is a really pretty color. I can see how it's your favorite.");
 
-            //Här frågar den om ens favoritdjur
+            //Här frågar den om ens favoritdjur och namn på det om man kunde haft det som husdjur
 
             Console.WriteLine("Last question!");
             Console.WriteLine("What's your favorite animal?");
@@ -229,7 +232,7 @@ namespace SlutprojektetMärtaÅgrenTE18B
 
             if (answer == "no")
             {
-                Console.WriteLine("Awh, well okay I understand. It's a lot of trust to put into someone you've just met.");
+                Console.WriteLine("Awh, well okay I understand. It's a lot of trust to put into someone you've only known for a couple minutes.");
                 Console.WriteLine("It was fun hanging out with you!");
                 Console.ReadLine();
             }
@@ -279,9 +282,57 @@ namespace SlutprojektetMärtaÅgrenTE18B
         }
 
 
+        static bool RPS()
+        {
+            Console.Clear();
+            Console.WriteLine("Welcome to Rock, Paper, Scissors!");
+            Console.WriteLine("Each round you and I will choose either rock, paper, or scissors.");
+            Console.WriteLine("Rock beats scissors, scissors beat paper, and paper beats rock!");
+            Console.WriteLine("Let's do best of three. :>");
+            Console.WriteLine();
+
+            Random generator = new Random();
+            int playerPoints = 0;
+            int palPoints = 0;
+            int round = 0;
+
+            while (playerPoints < 3 && palPoints < 3)
+            {
+                round++;
+                Console.Title = "Round " + round;
+                Console.WriteLine("What is your weapon of choice?");
+                string answer = Console.ReadLine().Trim().ToLower();
+                List<string> options = new List<string>() { "rock", "paper", "scissors" };
+                answer = CheckAnswer("What is your weapon of choice?", options, answer);
+                int player = options.IndexOf(answer);
+                int pal = generator.Next(2);
+
+                if (player > pal || player + 2 == pal)
+                {
+                    playerPoints++;
+                }
+
+                else
+                {
+                    palPoints++;
+                }
+
+
+
+
+            }
+
+
+
+            return true;
+        }
+
+
+
         static bool GuessTheNumber(int birthMonth, int birthDay)
         {
             Console.Clear();
+            Console.Title = "Guess the Number";
             Console.WriteLine("Welcome to Guess The Number!");
             Console.WriteLine("Here I will think of a number and you guess what it is. :>");
 
@@ -423,7 +474,8 @@ namespace SlutprojektetMärtaÅgrenTE18B
 
             Console.WriteLine("Yay! You won. :>");
             Console.WriteLine("");
-
+            Console.Clear();
+            Console.WriteLine("What're we gonna do next?");
 
             return true;
         }
