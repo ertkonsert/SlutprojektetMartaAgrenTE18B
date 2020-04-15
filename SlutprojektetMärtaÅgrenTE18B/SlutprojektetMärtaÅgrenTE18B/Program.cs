@@ -307,13 +307,32 @@ namespace SlutprojektetMärtaÅgrenTE18B
                 int player = options.IndexOf(answer);
                 int pal = generator.Next(2);
 
+
+                Console.WriteLine("Okay let's reveal!");
+                Console.WriteLine(3);
+                Thread.Sleep(500);
+                Console.WriteLine(2);
+                Thread.Sleep(500);
+                Console.WriteLine(1 + "!");
+                Thread.Sleep(500);
+                Console.WriteLine("You: " + answer);
+                Console.WriteLine("Me: " + options[pal]);
+
+
                 if (player > pal || player + 2 == pal)
                 {
+                    Console.WriteLine("You won!");
                     playerPoints++;
+                }
+
+                else if (player == pal)
+                {
+                    Console.WriteLine("It's a tie!");
                 }
 
                 else
                 {
+                    Console.WriteLine("Looks like I won.");
                     palPoints++;
                 }
 
