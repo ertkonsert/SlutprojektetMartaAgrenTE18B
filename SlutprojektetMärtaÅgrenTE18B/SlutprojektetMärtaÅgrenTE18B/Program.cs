@@ -12,7 +12,7 @@ namespace SlutprojektetMärtaÅgrenTE18B
         static void Main(string[] args)
         {
 
-            RPS();
+            
 
 
             //"Loading"
@@ -193,14 +193,13 @@ namespace SlutprojektetMärtaÅgrenTE18B
                 //Rock, Paper, Scissors
                 if (gameChoice == "1" || gameChoice == "rock paper scissors" || gameChoice == "rock, paper, scissors")
                 {
-                    Console.WriteLine("Här kör man sten sax påse men det är inte klart än.");
-
+                    RPS();
                 }
 
                 //Hangman
                 else if (gameChoice == "2" || gameChoice == "hangman")
                 {
-                    Console.WriteLine("Här spelar man hänga gubbe men det är inte klart än.");
+                    Hangman(favAnimal);
                 }
 
                 //Guess the Number
@@ -209,6 +208,10 @@ namespace SlutprojektetMärtaÅgrenTE18B
                     guessNum = GuessTheNumber(birthMonth, birthDay);
 
                 }
+
+
+
+
             }
 
 
@@ -282,13 +285,235 @@ namespace SlutprojektetMärtaÅgrenTE18B
         }
 
 
+        static bool Hangman(string animal)
+        {
+            Console.Clear();
+            Console.Title = "   ";
+            Console.WriteLine("Welcome to Hangman!");
+            Console.WriteLine("I pick a word and you guess letters!");
+            Console.WriteLine("Note från Märta här ifall jag inte hinner fixa innan du rättar:");
+            Console.WriteLine("Jag har inte lyckats få det att fungera med char arrayer :( men om man byter secretWord1 till en string[] så fungerar första ordet iallafall!");
+            Console.WriteLine();
+
+            Console.WriteLine("Okay, first word ^");
+            //Först hade jag tänkt slumpa mellan en massa vanliga ord men det här är mycket roligare.
+            char[] secretWord1 = { 't', 'r', 'o', 'j', 'a', 'n' };
+            HangmanRound(secretWord1, "trojan");
+
+            Console.WriteLine("You did it!");
+            Console.WriteLine("Let's go again. :>");
+
+            char[] secretWord2 = animal.ToCharArray();
+            HangmanRound(secretWord2, animal);
+
+
+            Console.ReadLine();
+            return true;
+        }
+
+
+        static void HangmanRound(char[] secretWord, string stringOfSecretWord)
+        {
+            
+            //Googlade hur man la till repeated values till en array så har inte skrivit nedanstående rad själv!
+            string[] word = Enumerable.Repeat("_ ", secretWord.Length).ToArray();
+
+            //Skriva ut understrecken.
+            for (int i = 0; i < word.Length; i++)
+            {
+                Console.Title += word[i];
+            }
+
+
+            int wrong = 0;
+
+            while (Console.Title != "   " + stringOfSecretWord)
+            {
+                string guess = Console.ReadLine().Trim().ToLower();
+                //CheckAnser metoden behövs inte här eftersom det bara är längden på svaret som spelar roll.
+                while (guess.Length > 1)
+                {
+                    Console.WriteLine("Guess one letter at a time please!");
+                    guess = Console.ReadLine().Trim().ToLower();
+
+                }
+
+                guess.ToCharArray();
+
+                if (secretWord.Contains(guess[0]))
+                {
+                    Console.WriteLine("Woo!");
+
+                    word[Array.IndexOf(secretWord, guess)] = guess;
+
+                    Console.Title = "   ";
+                    for (int i = 0; i < word.Length; i++)
+                    {
+                        Console.Title += word[i];
+                    }
+
+
+                }
+
+                else
+                {
+                    Console.WriteLine("Nope!");
+                    wrong = Art(wrong);
+                }
+            }
+
+
+        }
+
+        //Till Hangman
+        static int Art(int i)
+        {
+            i++;
+
+            if (i == 1)
+            {
+                Console.WriteLine(@"               ");
+                Console.WriteLine(@"               ");
+                Console.WriteLine(@"               ");
+                Console.WriteLine(@"               ");
+                Console.WriteLine(@"               ");
+                Console.WriteLine(@"   ___         ");
+                Console.WriteLine(@"  /   \        ");
+
+            }
+
+            else if (i == 2)
+            {
+                Console.WriteLine(@"               ");
+                Console.WriteLine(@"    |          ");
+                Console.WriteLine(@"    |          ");
+                Console.WriteLine(@"    |          ");
+                Console.WriteLine(@"    |          ");
+                Console.WriteLine(@"   _|_         ");
+                Console.WriteLine(@"  /   \        ");
+
+            }
+
+            else if (i == 3)
+            {
+                Console.WriteLine(@"     _______   ");
+                Console.WriteLine(@"    |          ");
+                Console.WriteLine(@"    |          ");
+                Console.WriteLine(@"    |          ");
+                Console.WriteLine(@"    |          ");
+                Console.WriteLine(@"   _|_         ");
+                Console.WriteLine(@"  /   \        ");
+
+            }
+
+            else if (i == 4)
+            {
+                Console.WriteLine(@"     _______   ");
+                Console.WriteLine(@"    |/         ");
+                Console.WriteLine(@"    |          ");
+                Console.WriteLine(@"    |          ");
+                Console.WriteLine(@"    |          ");
+                Console.WriteLine(@"   _|_         ");
+                Console.WriteLine(@"  /   \        ");
+
+            }
+
+            else if (i == 5)
+            {
+                Console.WriteLine(@"     _______   ");
+                Console.WriteLine(@"    |/      |  ");
+                Console.WriteLine(@"    |          ");
+                Console.WriteLine(@"    |          ");
+                Console.WriteLine(@"    |          ");
+                Console.WriteLine(@"   _|_         ");
+                Console.WriteLine(@"  /   \        ");
+
+            }
+
+            else if (i == 6)
+            {
+                Console.WriteLine(@"     _______   ");
+                Console.WriteLine(@"    |/      |  ");
+                Console.WriteLine(@"    |      (_) ");
+                Console.WriteLine(@"    |          ");
+                Console.WriteLine(@"    |          ");
+                Console.WriteLine(@"   _|_         ");
+                Console.WriteLine(@"  /   \        ");
+
+            }
+
+            else if (i == 7)
+            {
+                Console.WriteLine(@"     _______   ");
+                Console.WriteLine(@"    |/      |  ");
+                Console.WriteLine(@"    |      (_) ");
+                Console.WriteLine(@"    |       |  ");
+                Console.WriteLine(@"    |       |  ");
+                Console.WriteLine(@"   _|_         ");
+                Console.WriteLine(@"  /   \        ");
+
+            }
+
+            else if (i == 8)
+            {
+                Console.WriteLine(@"     _______   ");
+                Console.WriteLine(@"    |/      |  ");
+                Console.WriteLine(@"    |      (_) ");
+                Console.WriteLine(@"    |       |  ");
+                Console.WriteLine(@"    |       |  ");
+                Console.WriteLine(@"   _|_     /   ");
+                Console.WriteLine(@"  /   \        ");
+
+            }
+
+            else if (i == 9)
+            {
+                Console.WriteLine(@"     _______   ");
+                Console.WriteLine(@"    |/      |  ");
+                Console.WriteLine(@"    |      (_) ");
+                Console.WriteLine(@"    |       |  ");
+                Console.WriteLine(@"    |       |  ");
+                Console.WriteLine(@"   _|_     / \ ");
+                Console.WriteLine(@"  /   \        ");
+
+            }
+
+            else if (i == 10)
+            {
+                Console.WriteLine(@"     _______   ");
+                Console.WriteLine(@"    |/      |  ");
+                Console.WriteLine(@"    |      (_) ");
+                Console.WriteLine(@"    |      /|  ");
+                Console.WriteLine(@"    |       |  ");
+                Console.WriteLine(@"   _|_     / \ ");
+                Console.WriteLine(@"  /   \        ");
+
+            }
+
+            else if (i == 11)
+            {
+                Console.WriteLine(@"     _______   ");
+                Console.WriteLine(@"    |/      |  ");
+                Console.WriteLine(@"    |      (_) ");
+                Console.WriteLine(@"    |      /|\ ");
+                Console.WriteLine(@"    |       |  ");
+                Console.WriteLine(@"   _|_     / \ ");
+                Console.WriteLine(@"  /   \        ");
+
+            }
+
+
+            
+            return i;
+        }
+
         static bool RPS()
         {
             Console.Clear();
             Console.WriteLine("Welcome to Rock, Paper, Scissors!");
             Console.WriteLine("Each round you and I will choose either rock, paper, or scissors.");
             Console.WriteLine("Rock beats scissors, scissors beat paper, and paper beats rock!");
-            Console.WriteLine("Let's do best of three. :>");
+            Console.WriteLine("First to win three rounds wins! :>");
             Console.WriteLine();
 
             Random generator = new Random();
@@ -296,7 +521,7 @@ namespace SlutprojektetMärtaÅgrenTE18B
             int palPoints = 0;
             int round = 0;
 
-            while (playerPoints < 3 && palPoints < 3)
+            while (playerPoints < 1 && palPoints < 1)
             {
                 round++;
                 Console.Title = "Round " + round;
@@ -315,13 +540,14 @@ namespace SlutprojektetMärtaÅgrenTE18B
                 Thread.Sleep(500);
                 Console.WriteLine(1 + "!");
                 Thread.Sleep(500);
+                Console.WriteLine();
                 Console.WriteLine("You: " + answer);
                 Console.WriteLine("Me: " + options[pal]);
 
 
                 if (player > pal || player + 2 == pal)
                 {
-                    Console.WriteLine("You won!");
+                    Console.WriteLine("You won! :>");
                     playerPoints++;
                 }
 
@@ -336,11 +562,25 @@ namespace SlutprojektetMärtaÅgrenTE18B
                     palPoints++;
                 }
 
+            }
+            
+            while (playerPoints < 2 || palPoints < 2)
+            {
+                round++;
+                Console.Title = "Round " + round;
+                Console.WriteLine("What is your weapon of choice?");
+                string answer = Console.ReadLine().Trim().ToLower();
+                List<string> options = new List<string>() { "rock", "paper", "scissors" };
+                answer = CheckAnswer("What is your weapon of choice?", options, answer);
+                int player = options.IndexOf(answer);
 
+                if (playerPoints == 1)
+                {
+
+                }
 
 
             }
-
 
 
             return true;
