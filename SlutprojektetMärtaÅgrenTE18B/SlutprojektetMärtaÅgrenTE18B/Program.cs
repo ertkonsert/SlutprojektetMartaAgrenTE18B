@@ -12,7 +12,7 @@ namespace SlutprojektetMärtaÅgrenTE18B
         static void Main(string[] args)
         {
 
-            
+            Hangman("duck");
 
 
             //"Loading"
@@ -291,19 +291,28 @@ namespace SlutprojektetMärtaÅgrenTE18B
             Console.Title = "   ";
             Console.WriteLine("Welcome to Hangman!");
             Console.WriteLine("I pick a word and you guess letters!");
-            Console.WriteLine("Note från Märta här ifall jag inte hinner fixa innan du rättar:");
-            Console.WriteLine("Jag har inte lyckats få det att fungera med char arrayer :( men om man byter secretWord1 till en string[] så fungerar första ordet iallafall!");
             Console.WriteLine();
 
             Console.WriteLine("Okay, first word ^");
             //Först hade jag tänkt slumpa mellan en massa vanliga ord men det här är mycket roligare.
-            char[] secretWord1 = { 't', 'r', 'o', 'j', 'a', 'n' };
+            string[] secretWord1 = { "t", "r", "o", "j", "a", "n" };
             HangmanRound(secretWord1, "trojan");
 
             Console.WriteLine("You did it!");
             Console.WriteLine("Let's go again. :>");
 
-            char[] secretWord2 = animal.ToCharArray();
+            char[] secretWord2Char = animal.ToCharArray();
+
+            List<string> forConversion = new List<string>();
+
+            for (int i = 0; i < secretWord2Char.Length; i++)
+            {
+                forConversion.Add(secretWord2Char[i].ToString());
+            }
+
+            string[] secretWord2 = forConversion.ToArray();
+
+
             HangmanRound(secretWord2, animal);
 
 
@@ -312,9 +321,10 @@ namespace SlutprojektetMärtaÅgrenTE18B
         }
 
 
-        static void HangmanRound(char[] secretWord, string stringOfSecretWord)
+        static void HangmanRound(string[] secretWord, string stringOfSecretWord)
         {
-            
+            Console.Title = "   ";
+
             //Googlade hur man la till repeated values till en array så har inte skrivit nedanstående rad själv!
             string[] word = Enumerable.Repeat("_ ", secretWord.Length).ToArray();
 
@@ -340,7 +350,7 @@ namespace SlutprojektetMärtaÅgrenTE18B
 
                 guess.ToCharArray();
 
-                if (secretWord.Contains(guess[0]))
+                if (secretWord.Contains(guess))
                 {
                     Console.WriteLine("Woo!");
 
