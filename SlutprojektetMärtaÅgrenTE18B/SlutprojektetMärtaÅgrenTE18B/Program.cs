@@ -12,7 +12,7 @@ namespace SlutprojektetMärtaÅgrenTE18B
         static void Main(string[] args)
         {
 
-            Hangman("duck");
+            RPS();
 
 
             //"Loading"
@@ -315,7 +315,9 @@ namespace SlutprojektetMärtaÅgrenTE18B
 
             HangmanRound(secretWord2, animal);
 
-
+            Console.WriteLine("Wow that sure was fun.");
+            Console.WriteLine("Let's play something else!");
+            Console.Title = "Awaiting confirmation";
             Console.ReadLine();
             return true;
         }
@@ -531,7 +533,7 @@ namespace SlutprojektetMärtaÅgrenTE18B
             int palPoints = 0;
             int round = 0;
 
-            while (playerPoints < 1 && palPoints < 1)
+            while (playerPoints < 3)
             {
                 round++;
                 Console.Title = "Round " + round;
@@ -542,6 +544,24 @@ namespace SlutprojektetMärtaÅgrenTE18B
                 int player = options.IndexOf(answer);
                 int pal = generator.Next(2);
 
+                if (palPoints == playerPoints && playerPoints > 0)
+                {
+
+                }
+
+                else if (palPoints > 0)
+                {
+                    if (player == 0)
+                    {
+                        pal = 2;
+                    }
+
+                    else
+                    {
+                        pal = player--;
+                    }
+
+                }
 
                 Console.WriteLine("Okay let's reveal!");
                 Console.WriteLine(3);
@@ -574,23 +594,6 @@ namespace SlutprojektetMärtaÅgrenTE18B
 
             }
             
-            while (playerPoints < 2 || palPoints < 2)
-            {
-                round++;
-                Console.Title = "Round " + round;
-                Console.WriteLine("What is your weapon of choice?");
-                string answer = Console.ReadLine().Trim().ToLower();
-                List<string> options = new List<string>() { "rock", "paper", "scissors" };
-                answer = CheckAnswer("What is your weapon of choice?", options, answer);
-                int player = options.IndexOf(answer);
-
-                if (playerPoints == 1)
-                {
-
-                }
-
-
-            }
 
 
             return true;
