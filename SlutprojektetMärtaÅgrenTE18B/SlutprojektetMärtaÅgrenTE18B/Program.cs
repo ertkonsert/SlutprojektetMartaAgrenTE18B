@@ -11,15 +11,12 @@ namespace SlutprojektetMärtaÅgrenTE18B
     {
         static void Main(string[] args)
         {
-
             RPS();
-
-
             //"Loading"
             Console.Title = "Initiating startup sequence...  Please Wait";
-            
-            //for loop som kör loading "animationen" fyra gånger.
-            for (int i = 0; i < 4; i++)
+            /*
+            //for loop som kör loading "animationen" tre gånger.
+            for (int i = 0; i < 3; i++)
             {
                 Console.Write("Loading");
                 //for loop som skriver ut 3 punkter
@@ -36,7 +33,7 @@ namespace SlutprojektetMärtaÅgrenTE18B
             Console.WriteLine("Ready to start, press Enter to launch :)");
             Console.ReadLine();
             Console.Clear();
-            
+            */
             Console.Title = "Welcome to Pal Place!";
 
             //Start och intro
@@ -147,7 +144,7 @@ namespace SlutprojektetMärtaÅgrenTE18B
 
             //Här frågar den om ens favoritfärg
 
-            List<string> colors = new List<string>() { "black", "blue", "green", "cyan", "light blue", "red", "magenta", "pink", "yellow", "gray", };
+            List<string> colors = new List<string>() { "black", "blue", "green", "cyan", "light blue", "red", "magenta", "purple", "yellow", "gray" };
 
             Console.WriteLine("Interesting, okay next question!");
             Console.WriteLine("What is your favorite color?");
@@ -170,36 +167,57 @@ namespace SlutprojektetMärtaÅgrenTE18B
             Thread.Sleep(3000);
 
             //Hub
-            Console.Clear();
-            Console.Title = "Game Hub";
+
 
             bool guessNum = false;
             bool rPS = false;
             bool hangman = false;
+            int timesPlayed = 0;
 
             Console.WriteLine("Here are the games!");
 
             while (guessNum == false || rPS == false || hangman == false)
             {
+                Console.Clear();
+                Console.Title = "Game Hub";
+
                 Console.WriteLine("1. Rock, Paper, Scissors");
                 Console.WriteLine("2. Hangman");
                 Console.WriteLine("3. Guess the Number");
                 Console.WriteLine("Pick one. :>");
 
+
                 List<string> games = new List<string>() { "1", "2", "3", "rock, paper, scissors", "rock paper scissors", "hangman", "guess the number" };
                 string gameChoice = Console.ReadLine().ToLower().Trim();
                 gameChoice = CheckAnswer("Pick one of the three games.", games, gameChoice);
 
+                if (timesPlayed == 1)
+                {
+                    Console.WriteLine("Oh, wait!");
+                    Console.WriteLine("I almost forgot.");
+                    Console.WriteLine("There's this surprise I've prepared for you. :3c");
+                    Console.WriteLine("Hold on.");
+                    Thread.Sleep(1000);
+                    ForegroundColorCheck(favColor);
+                    Console.WriteLine("There!");
+                    Console.WriteLine("It's your favorite color. :>");
+                    Console.WriteLine("Do you like it?");
+                    Console.Title = "Awaiting confirmation";
+                    Console.ReadLine();
+                    Console.WriteLine("Okay let's get to the game.");
+                    Thread.Sleep(500);
+                }
+
                 //Rock, Paper, Scissors
                 if (gameChoice == "1" || gameChoice == "rock paper scissors" || gameChoice == "rock, paper, scissors")
                 {
-                    RPS();
+                    rPS = RPS();
                 }
 
                 //Hangman
                 else if (gameChoice == "2" || gameChoice == "hangman")
                 {
-                    Hangman(favAnimal);
+                    hangman = Hangman(favAnimal);
                 }
 
                 //Guess the Number
@@ -209,8 +227,7 @@ namespace SlutprojektetMärtaÅgrenTE18B
 
                 }
 
-
-
+                timesPlayed++;
 
             }
 
@@ -218,7 +235,8 @@ namespace SlutprojektetMärtaÅgrenTE18B
 
 
             //Ending?
-            
+            Console.Clear();
+
             Console.WriteLine("Hmm... :I");
             Console.WriteLine("I guess we've done everything, huh?");
             Console.WriteLine("...");
@@ -235,7 +253,7 @@ namespace SlutprojektetMärtaÅgrenTE18B
 
             if (answer == "no")
             {
-                Console.WriteLine("Awh, well okay I understand. It's a lot of trust to put into someone you've only known for a couple minutes.");
+                Console.WriteLine("Awh, well okay I understand. It's a lot of trust to put into someone you've only known for a couple of minutes.");
                 Console.WriteLine("It was fun hanging out with you!");
                 Console.ReadLine();
             }
@@ -284,7 +302,52 @@ namespace SlutprojektetMärtaÅgrenTE18B
             return answer;
         }
 
+        //Metod som ändrar färgen på texten beroende på vad man valde för favoritfärg
+        static void ForegroundColorCheck(string favColor)
+        {
+            if (favColor == "black")
+            {
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.BackgroundColor = ConsoleColor.White;
+            }
 
+            else if (favColor == "blue")
+            {
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
+            }
+
+            else if (favColor == "green")
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+            }
+
+            else if (favColor == "cyan" || favColor == "light blue")
+            {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+            }
+
+            else if (favColor == "red")
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+            }
+
+            else if (favColor == "magenta" || favColor == "purple")
+            {
+                Console.ForegroundColor = ConsoleColor.Magenta;
+            }
+
+            else if (favColor == "yellow")
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+            }
+
+            else if (favColor == "gray")
+            {
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+            }
+        }
+
+        //Hangman metoden!
         static bool Hangman(string animal)
         {
             Console.Clear();
@@ -298,8 +361,10 @@ namespace SlutprojektetMärtaÅgrenTE18B
             string[] secretWord1 = { "t", "r", "o", "j", "a", "n" };
             HangmanRound(secretWord1, "trojan");
 
-            Console.WriteLine("You did it!");
+            Console.WriteLine("You did it! The word was trojan.");
             Console.WriteLine("Let's go again. :>");
+
+            Console.Clear();
 
             char[] secretWord2Char = animal.ToCharArray();
 
@@ -322,7 +387,7 @@ namespace SlutprojektetMärtaÅgrenTE18B
             return true;
         }
 
-
+        //För de olika rundorna av hangman
         static void HangmanRound(string[] secretWord, string stringOfSecretWord)
         {
             Console.Title = "   ";
@@ -352,6 +417,7 @@ namespace SlutprojektetMärtaÅgrenTE18B
 
                 guess.ToCharArray();
 
+                //tyvärr fungerar det inte (i nuläget) om ordet har flera bokstäver som är samma :(
                 if (secretWord.Contains(guess))
                 {
                     Console.WriteLine("Woo!");
@@ -377,7 +443,7 @@ namespace SlutprojektetMärtaÅgrenTE18B
 
         }
 
-        //Till Hangman
+        //Konst till Hangman
         static int Art(int i)
         {
             i++;
@@ -519,6 +585,7 @@ namespace SlutprojektetMärtaÅgrenTE18B
             return i;
         }
 
+        //Sten sax påse metoden, returnerar true för då har man kört spelet (gäller för samtliga minispelmetoder)
         static bool RPS()
         {
             Console.Clear();
@@ -533,10 +600,10 @@ namespace SlutprojektetMärtaÅgrenTE18B
             int palPoints = 0;
             int round = 0;
 
-            while (playerPoints < 3)
+            while (playerPoints < 2 || palPoints < 2)
             {
                 round++;
-                Console.Title = "Round " + round;
+                Console.Title = "Round " + round + "    | You: " + playerPoints + " Me: " + palPoints;
                 Console.WriteLine("What is your weapon of choice?");
                 string answer = Console.ReadLine().Trim().ToLower();
                 List<string> options = new List<string>() { "rock", "paper", "scissors" };
@@ -544,13 +611,11 @@ namespace SlutprojektetMärtaÅgrenTE18B
                 int player = options.IndexOf(answer);
                 int pal = generator.Next(2);
 
-                if (palPoints == playerPoints && playerPoints > 0)
-                {
 
-                }
-
-                else if (palPoints > 0)
+                //Whoopsie daisy verkar som om det här spelet är riggat ¯\_(ツ)_/¯
+                if (palPoints > playerPoints)
                 {
+                    //player vinner
                     if (player == 0)
                     {
                         pal = 2;
@@ -558,10 +623,27 @@ namespace SlutprojektetMärtaÅgrenTE18B
 
                     else
                     {
-                        pal = player--;
+                        pal = player - 1;
+                    }
+                }
+
+                else if (palPoints < playerPoints)
+                {
+                    //pal vinner
+                    if (player == 2)
+                    {
+                        pal = 0;
+                    }
+
+                    else
+                    {
+                        pal = player + 1;
                     }
 
                 }
+
+
+                Console.Clear();
 
                 Console.WriteLine("Okay let's reveal!");
                 Console.WriteLine(3);
@@ -571,11 +653,12 @@ namespace SlutprojektetMärtaÅgrenTE18B
                 Console.WriteLine(1 + "!");
                 Thread.Sleep(500);
                 Console.WriteLine();
+                //Jag skulle så gärna vilja ha ascii art här men det orkar jag inte fixa just nu :(
                 Console.WriteLine("You: " + answer);
                 Console.WriteLine("Me: " + options[pal]);
 
 
-                if (player > pal || player + 2 == pal)
+                if (player - 2 != pal && player > pal || player + 2 == pal)
                 {
                     Console.WriteLine("You won! :>");
                     playerPoints++;
@@ -592,15 +675,83 @@ namespace SlutprojektetMärtaÅgrenTE18B
                     palPoints++;
                 }
 
-            }
-            
+                //tom cw för space
+                Console.WriteLine();
 
+            }
+
+            //Sista ronden är extra riggad så den får va utanför loopen
+            round++;
+            Console.Title = "Round " + round + "    | You: " + playerPoints + " Me: " + palPoints;
+            Console.WriteLine("What is your weapon of choice?");
+            /* Jag har döpt om variablerna här i sista sekund för motsvarande variabler ovan tycker att namnen är tagna 
+             * men inte i samma scope tror jag och jag är för trött för att fixa ordentligt! :)
+             * det blir lite rörigt kanske men det funkar så det är good enough. */
+            string lastAnswer = Console.ReadLine().Trim().ToLower();
+            List<string> option = new List<string>() { "rock", "paper", "scissors" };
+            lastAnswer = CheckAnswer("What is your weapon of choice?", option, lastAnswer);
+            int playerInt = option.IndexOf(lastAnswer);
+            int palInt;
+
+            //sätter upp värden så pal skulle vunnit
+            if (playerInt == 2)
+            {
+                palInt = 0;
+            }
+
+            else
+            {
+                palInt = playerInt + 1;
+            }
+
+            Console.Clear();
+
+            Console.WriteLine("Okay let's reveal!");
+            Console.WriteLine(3);
+            Thread.Sleep(500);
+            Console.WriteLine(2);
+            Thread.Sleep(500);
+            Console.WriteLine(1 + "!");
+            Thread.Sleep(500);
+            Console.WriteLine();
+            Console.WriteLine("You: " + lastAnswer);
+            Console.WriteLine("Me: " + option[palInt]);
+
+            Thread.Sleep(500);
+            Console.Clear();
+            //ändrar värdena så player vinner
+            if (playerInt == 0)
+            {
+                palInt = 2;
+            }
+
+            else
+            {
+                palInt = playerInt - 1;
+            }
+            Console.WriteLine("Okay let's reveal!");
+            Console.WriteLine(3);
+            Console.WriteLine(2);
+            Console.WriteLine(1 + "!");
+            Console.WriteLine();
+            Console.WriteLine("You: " + lastAnswer);
+            Console.WriteLine("Me: " + option[palInt]);
+
+            Thread.Sleep(1000);
+
+
+            Console.WriteLine("Aw man, you beat me!");
+            Console.WriteLine("Well played. :>");
+            Console.WriteLine("That was fun, right?");
+            Console.Title = "Awaiting confirmation";
+            Console.ReadLine();
+            Console.WriteLine("Let's play another game!");
 
             return true;
         }
 
 
-
+        //Gissa siffran fast lite mer avancerat än vi gjort tidigare
         static bool GuessTheNumber(int birthMonth, int birthDay)
         {
             Console.Clear();
