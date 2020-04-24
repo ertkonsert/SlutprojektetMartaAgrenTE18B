@@ -11,10 +11,9 @@ namespace SlutprojektetMärtaÅgrenTE18B
     {
         static void Main(string[] args)
         {
-            RPS();
             //"Loading"
             Console.Title = "Initiating startup sequence...  Please Wait";
-            /*
+            
             //for loop som kör loading "animationen" tre gånger.
             for (int i = 0; i < 3; i++)
             {
@@ -33,7 +32,7 @@ namespace SlutprojektetMärtaÅgrenTE18B
             Console.WriteLine("Ready to start, press Enter to launch :)");
             Console.ReadLine();
             Console.Clear();
-            */
+            
             Console.Title = "Welcome to Pal Place!";
 
             //Start och intro
